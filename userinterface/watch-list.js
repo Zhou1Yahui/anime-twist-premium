@@ -1,12 +1,12 @@
 UserInterface.model({
-	name: "watch_list",
+	name: "watchlist",
 	method: UserInterface.insertBefore,
 	properties: {
 		tagName: "div"
 	}
 })
 
-UserInterface.bind("watch_list", async (element) => {
+UserInterface.bind("watchlist", async (element) => {
 
 	alert()
 
