@@ -25,7 +25,7 @@ WatchList.prototype.initialize = function(localStorage, serieTitle) {
  * @return {Entry}
  */
 WatchList.prototype.addEntry = function(data) {
-	const entry = new Entry(data.name, data.slug)
+	const entry = new WatchListEntry(data.name, data.slug)
 	this.entries.push(entry)
 	localStorage.setItem("entries", JSON.stringify(this.entries))
 	return entry

@@ -7,7 +7,7 @@
 		"globals": {
 				"Atomics": "readonly",
 				"UserInterface": "readonly",
-				"Entry": "readonly",
+				"WatchListEntry": "readonly",
 				"WatchList": "readonly",
 				"SharedArrayBuffer": "readonly"
 		},

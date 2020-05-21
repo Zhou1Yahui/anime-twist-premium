@@ -2,7 +2,7 @@
  * @param {string} name
  * @param {string} slug
  */
-function Entry(name, slug) {
+function WatchListEntry(name, slug) {
 	this.name = name
 	this.origin = origin
 	this.slug = slug
