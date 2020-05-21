@@ -38,3 +38,11 @@ WatchList.prototype.removeEntry = function(entry) {
 	this.entries.splice(this.entries.indexOf(entry), 1)
 	localStorage.setItem("entries", JSON.stringify(this.entries))
 }
+
+/**
+ * @param  {string} pathname
+ * @return {string}
+ */
+WatchList.prototype.slugify = function(pathname) {
+	return pathname.split("/")[2]
+}

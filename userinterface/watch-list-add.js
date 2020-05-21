@@ -14,7 +14,7 @@ UserInterface.bind("watchlist.add", (element, watchlist) => {
 		element.parentNode.removeChild(element)
 		UserInterface.announce(watchlist, "entry add", {
 			name: document.querySelector(".series-title").textContent.trim(),
-			slug: location.pathname.split("/")[2]
+			slug: WatchList.slugify(location.pathname)
 		})
 	})
 
