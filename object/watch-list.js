@@ -11,7 +11,7 @@ WatchList.prototype.initialize = function(localStorage, serieTitle) {
 	this.serieTitle = serieTitle
 	let entriesData = []
 	if(localStorage.getItem("entries") === null) {
-		localStorage.setItem("entries", [])
+		localStorage.setItem("entries", JSON.stringify([]))
 	} else {
 		entriesData = JSON.parse(localStorage.getItem("entries"))
 	}
