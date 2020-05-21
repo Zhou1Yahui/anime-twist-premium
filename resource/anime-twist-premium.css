@@ -1,0 +1,27 @@
+.atp-watchlist-menu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 10px;
+	right: 0;
+	bottom: 0;
+}
+
+.atp-watchlist-menu .entries {
+	display: none;
+	z-index: 1;
+}
+
+.atp-watchlist-menu.show .entries {
+	display: block;
+}
+
+.atp-watchlist-menu .entry {
+	color: #ffffffb3;
+	background-color: #cececf4d;
+	padding: 5px;
+}
+
+.atp-watchlist-menu .entry:nth-child(even) {
+	background-color: #b065724d;
+}
