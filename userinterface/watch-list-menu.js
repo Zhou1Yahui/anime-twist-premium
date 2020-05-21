@@ -1,5 +1,5 @@
 UserInterface.model({
-	name: "watchlist.view",
+	name: "watchlist.menu",
 	method: UserInterface.appendChild,
 	properties: {
 		tagName: "div",

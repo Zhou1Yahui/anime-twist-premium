@@ -31,7 +31,7 @@ UserInterface.bind("watchlist.entries", async (element, watchList) => {
 
 	UserInterface.listen(watchList, "entry add", async data => {
 		const entry = watchList.addEntry(data)
-		await UserInterface.runModel("entry", { data, parentNode: element, bindingArgs: [watchList, entry] })
+		await UserInterface.runModel("watchlist.entry", { data, parentNode: element, bindingArgs: [watchList, entry] })
 		UserInterface.announce(watchList, "entry added")
 	})
 

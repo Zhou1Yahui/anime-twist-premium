@@ -6,18 +6,13 @@ UserInterface.model({
 	}
 })
 
-UserInterface.bind("watch_list", (element) => {
+UserInterface.bind("watch_list", async (element) => {
+
+	alert()
 
 	const watchList = new WatchList()
 
 	watchList.initialize(localStorage, document.querySelector(".series-title"))
-
-	window.addEventListener("load", async function() {
-		await UserInterface.runModel("watchlist.view", { bindingArgs: [watchList] })
-		if(watchList.entries.filter(entry => entry.url === location.pathname).length === 0) {
-			await UserInterface.runModel("watchlist.add", { parentNode: document.querySelector(".video-data +.donations"), bindingArgs: [watchList] })
-		}
-	})
 
 	new MutationObserver(mutationsList => {
 		if(watchList.entries.filter(entry => entry.url === location.pathname).length === 0)
@@ -30,5 +25,10 @@ UserInterface.bind("watch_list", (element) => {
 				}
 			}
 	}).observe(document.documentElement, { attributes: true, childList: true, subtree: true })
+
+	await UserInterface.runModel("watchlist.menu", { bindingArgs: [watchList] })
+	if(watchList.entries.filter(entry => entry.url === location.pathname).length === 0) {
+		await UserInterface.runModel("watchlist.add", { parentNode: document.querySelector(".video-data +.donations"), bindingArgs: [watchList] })
+	}
 
 })
