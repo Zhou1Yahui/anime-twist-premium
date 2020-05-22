@@ -3,6 +3,7 @@ UserInterface.model({
 	method: UserInterface.appendChild,
 	callback: data => ({
 		tagName: "div",
+		style: "display: grid; grid-auto-flow: column; grid-gap: 15px",
 		className: "entry",
 		children: [
 			{
@@ -11,6 +12,12 @@ UserInterface.model({
 				href: data.url,
 				className: "name",
 				textContent: data.name
+			},
+			{
+				tagName: "div",
+				className: "remove",
+				style: "cursor: pointer;",
+				textContent: "❌"
 			}
 		]
 	})
@@ -19,12 +26,17 @@ UserInterface.model({
 
 UserInterface.bind("watchlist.entry", (element, watchList, entry) => {
 
-	element.addEventListener("mouseup" , event => {
-		if(event.button === 1) {
-			event.preventDefault()
-			UserInterface.announce(watchList, "entry remove", entry)
-		}
-	})
+	const listeners = []
 
+	listeners.push(UserInterface.listen(watchList, "entry remove", entry_ => {
+		if(entry_ === entry) {
+			listeners.forEach(listener => UserInterface.removeListener(listener))
+			element.remove()
+		}
+	}))
+
+	element.querySelector(".remove").addEventListener("click" , () => {
+		UserInterface.announce(watchList, "entry remove", entry)
+	})
 
 })

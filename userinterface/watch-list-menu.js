@@ -7,9 +7,10 @@ UserInterface.model({
 		children: [
 			{
 				tagName: "button",
-				className: "toggle",
-				title: "Middle click an entry to remove it.",
-				textContent: "Watch List"
+				disabled: true,
+				className: "watchlist",
+				title: "Your watchlist (by Anime Twist Premium)",
+				textContent: "📺"
 			}
 		]
 	}
@@ -17,9 +18,28 @@ UserInterface.model({
 
 UserInterface.bind("watchlist.menu", async (element, watchList) => {
 
-	element.querySelector(".toggle").addEventListener("click", () => {
+	const watchListButton = element.querySelector(".watchlist")
+
+	if(watchList.entries.length >= 1) {
+		watchListButton.disabled = false
+	}
+
+	UserInterface.listen(watchList, "entry added", () => {
+		watchListButton.disabled = false
+	})
+
+	UserInterface.listen(watchList, "entry removed", () => {
+		if(watchList.entries.length === 0) {
+			watchListButton.disabled = true
+		}
+	})
+
+	watchListButton.addEventListener("click", () => {
 		if(watchList.entries.length >= 1) {
-			UserInterface.announce(watchList, "entries toggle")
+			UserInterface.announce(watchList, "popup open", {
+				model: "watchlist.entries",
+				bindingArgs: [watchList]
+			})
 		}
 	})
 

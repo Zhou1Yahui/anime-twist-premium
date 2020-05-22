@@ -1,18 +1,36 @@
 UserInterface.model({
 	name: "watchlist.add",
-	method: UserInterface.insertBefore,
+	method: UserInterface.appendChild,
 	properties: {
 		tagName: "button",
+		disabled: true,
 		className: "add_to_watchlist",
-		textContent: "Add to Watchlist"
+		textContent: "➕",
+		title: "Add to Watchlist"
 	}
 })
 
-UserInterface.bind("watchlist.add", (element, watchlist) => {
+UserInterface.bind("watchlist.add", (element, watchList) => {
+
+	if(watchList.entry === null) {
+		element.disabled = false
+	}
+
+	UserInterface.listen(watchList, "entry removed", entry => {
+		if(entry === watchList.entry) {
+			element.disabled = false
+		}
+	})
+
+	UserInterface.listen(watchList, "entry set", entry => {
+		if(entry === watchList.entry) {
+			element.disabled = false
+		}
+	})
 
 	element.addEventListener("click", () => {
-		element.parentNode.removeChild(element)
-		UserInterface.announce(watchlist, "entry add", {
+		element.disabled = true
+		UserInterface.announce(watchList, "entry add", {
 			name: document.querySelector(".series-title").textContent.trim(),
 			slug: WatchList.slugify(location.pathname)
 		})

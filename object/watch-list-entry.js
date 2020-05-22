@@ -6,5 +6,5 @@ function WatchListEntry(name, slug) {
 	this.name = name
 	this.origin = origin
 	this.slug = slug
-	this.url = location.origin + "/" + slug
+	this.url = location.origin + "/a/" + slug + "/first"
 }

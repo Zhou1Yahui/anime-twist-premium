@@ -1,14 +1,13 @@
 function WatchList() {
-	this.serieTitle = null
+	this.entry = null
 	this.entries = []
 }
 
 /**
  * @param  {LocalStorage} localStorage
- * @param  {string}       serieTitle
+ * @param  {string}       pathname
  */
-WatchList.prototype.initialize = function(localStorage, serieTitle) {
-	this.serieTitle = serieTitle
+WatchList.prototype.initialize = function(localStorage, pathname) {
 	let entriesData = []
 	if(localStorage.getItem("entries") === null) {
 		localStorage.setItem("entries", JSON.stringify(this.entries))
@@ -16,6 +15,10 @@ WatchList.prototype.initialize = function(localStorage, serieTitle) {
 		entriesData = JSON.parse(localStorage.getItem("entries"))
 	}
 	entriesData.forEach(data => this.addEntry(data))
+	const entry = this.entries.find(entry => entry.slug === WatchList.slugify(pathname))
+	if(entry) {
+		this.entry = entry
+	}
 }
 
 /**
@@ -43,6 +46,6 @@ WatchList.prototype.removeEntry = function(entry) {
  * @param  {string} pathname
  * @return {string}
  */
-WatchList.prototype.slugify = function(pathname) {
+WatchList.slugify = function(pathname) {
 	return pathname.split("/")[2]
 }

@@ -1,10 +1,7 @@
-.atp-watchlist-menu {
+#atp {
 	position: absolute;
-	left: 0;
-	top: 0;
-	padding: 10px;
-	right: 0;
-	bottom: 0;
+	display: grid;
+	grid-gap: 10px;
 }
 
 .atp-watchlist-menu .entries {
@@ -12,7 +9,7 @@
 	z-index: 1;
 }
 
-.atp-watchlist-menu.show .entries {
+.atp-watchlist-menu .entries.show {
 	display: block;
 }
 
@@ -24,4 +21,17 @@
 
 .atp-watchlist-menu .entry:nth-child(even) {
 	background-color: #b065724d;
+}
+
+.popup-body {
+	max-width: 840px !important;
+	max-height: 100vh !important;
+	flex: none !important;
+	padding: 1rem !important;
+	background: #1c1f22 !important;
+	border-radius: 2px !important;
+	display: flex !important;
+	flex-direction: column !important;
+	margin: 0 auto !important;
+	border: 0 !important;
 }

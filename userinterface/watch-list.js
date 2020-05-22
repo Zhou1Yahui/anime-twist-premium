@@ -1,8 +1,9 @@
 UserInterface.model({
 	name: "watchlist",
-	method: UserInterface.insertBefore,
+	method: UserInterface.appendChild,
 	properties: {
-		tagName: "div"
+		tagName: "div",
+		id: "atp"
 	}
 })
 
@@ -10,22 +11,23 @@ UserInterface.bind("watchlist", async (element) => {
 
 	const watchList = new WatchList()
 
-	watchList.initialize(localStorage, document.querySelector(".series-title"))
+	watchList.initialize(localStorage, location.pathname)
 
-	new MutationObserver(mutationsList => {
-		if(watchList.entries.filter(entry => entry.url === location.pathname).length === 0)
-			loop:for(let mutation of mutationsList) {
-				for(let addedNode of mutation.addedNodes) {
-					if(addedNode.className === "page-enter page-enter-active") { // FIX
-						UserInterface.runModel("watchlist.add", { parentNode: document.body, bindingArgs: [watchList] })
-						break loop
-					} else if(addedNode.className === "donations" && watchList.entries.filter(entry => entry.url === WatchList.slugify(location.pathname)).length === 0) {
-						UserInterface.runModel("watchlist.add", { parentNode: document.querySelector(".video-data +.donations"), bindingArgs: [watchList] })
-					}
-				}
-			}
-	}).observe(document.documentElement, { attributes: true, childList: true, subtree: true })
+	UserInterface.listen(watchList, "entry add", async data => {
+		const entry = watchList.addEntry(data)
+		UserInterface.announce(watchList, "entry added", entry)
+	})
 
-	await UserInterface.runModel("watchlist.menu", { bindingArgs: [watchList] })
+	UserInterface.listen(watchList, "entry remove", entry => {
+		watchList.removeEntry(entry)
+		if(watchList.entries.length === 0) {
+			UserInterface.announce(watchList, "popup close")
+		}
+		UserInterface.announce(watchList, "entry removed", entry)
+	})
+
+	await UserInterface.runModel("collection.popup", { parentNode: document.body, bindingArgs: [watchList] })
+	await UserInterface.runModel("watchlist.menu", { parentNode: element, bindingArgs: [watchList] })
+	await UserInterface.runModel("watchlist.add", { parentNode: element, bindingArgs: [watchList] })
 
 })
