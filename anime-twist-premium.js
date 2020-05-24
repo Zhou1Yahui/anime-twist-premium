@@ -17,8 +17,11 @@
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-entries.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-menu.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list.js
-// @resource      https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/resource/anime-twist-premium.css
-// @namespace thoughtsunificator.me
+// @resource      anime-twist-premium https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/resource/anime-twist-premium.css
+// @run-at        document-start
+// @namespace     thoughtsunificator.me
 // ==/UserScript==
 
 UserInterface.runModel("watchlist", { parentNode: document.documentElement })
+
+// Don't bother, it will not work because document-start is fired too late.
