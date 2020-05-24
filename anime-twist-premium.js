@@ -18,7 +18,7 @@
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-menu.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list.js
 // @resource      https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/resource/anime-twist-premium.css
-// @namespace https://greasyfork.org/users/257151
+// @namespace thoughtsunificator.me
 // ==/UserScript==
 
 UserInterface.runModel("watchlist", { parentNode: document.documentElement })
