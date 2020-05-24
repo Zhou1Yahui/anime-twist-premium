@@ -23,5 +23,3 @@
 // ==/UserScript==
 
 UserInterface.runModel("watchlist", { parentNode: document.documentElement })
-
-// Don't bother, it will not work because document-start is fired too late.
