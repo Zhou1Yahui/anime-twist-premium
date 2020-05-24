@@ -7,17 +7,17 @@
 // @homepageURL   https://thoughtsunificator.me
 // @copyright     2019, Romain Lebesle <oss@thoughtsunificator.me> (https://thoughtsunificator.me)
 // @license       MIT
-// @require       https://github.com/thoughtsunificator/userinterface.js/master/src/userinterface.js
-// @require       https://github.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup.js
-// @require       https://github.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup-confirm.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/object/watch-list.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/object/watch-list-entry.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-add.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-entry.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-entries.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-menu.js
-// @require       https://github.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list.js
-// @resource      https://github.com/thoughtsunificator/anime-twist-premium/master/resource/anime-twist-premium.css
+// @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js/master/src/userinterface.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup-confirm.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/object/watch-list.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/object/watch-list-entry.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-add.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-entry.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-entries.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-menu.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list.js
+// @resource      https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/resource/anime-twist-premium.css
 // @namespace https://greasyfork.org/users/257151
 // ==/UserScript==
 
