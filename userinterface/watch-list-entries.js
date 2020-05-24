@@ -3,6 +3,7 @@ UserInterface.model({
 	method: UserInterface.appendChild,
 	properties: {
 		tagName: "nav",
+		style: "display: grid; grid-gap: 10px",
 		className: "entries"
 	}
 })

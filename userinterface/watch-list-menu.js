@@ -25,6 +25,7 @@ UserInterface.bind("watchlist.menu", async (element, watchList) => {
 	}
 
 	UserInterface.listen(watchList, "entry added", () => {
+		console.log("test")
 		watchListButton.disabled = false
 	})
 
@@ -36,10 +37,7 @@ UserInterface.bind("watchlist.menu", async (element, watchList) => {
 
 	watchListButton.addEventListener("click", () => {
 		if(watchList.entries.length >= 1) {
-			UserInterface.announce(watchList, "popup open", {
-				model: "watchlist.entries",
-				bindingArgs: [watchList]
-			})
+			UserInterface.announce(watchList, "entries popup")
 		}
 	})
 

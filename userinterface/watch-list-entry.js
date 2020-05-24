@@ -3,7 +3,7 @@ UserInterface.model({
 	method: UserInterface.appendChild,
 	callback: data => ({
 		tagName: "div",
-		style: "display: grid; grid-auto-flow: column; grid-gap: 15px",
+		style: "display: grid; grid-template-columns: 1fr auto; grid-gap: 15px",
 		className: "entry",
 		children: [
 			{
@@ -15,14 +15,28 @@ UserInterface.model({
 			},
 			{
 				tagName: "div",
-				className: "remove",
-				style: "cursor: pointer;",
-				textContent: "❌"
+				className: "controls",
+				style: "display: grid; grid-auto-flow: column; grid-gap: 5px; visibility: hidden;",
+				children: [
+					{
+						tagName: "a",
+						target: "_blank",
+						href: `https://anidb.net/anime/?adb.search=${data.name}&do.search=1`,
+						className: "lookup",
+						style: "cursor: pointer;",
+						textContent: "🔍"
+					},
+					{
+						tagName: "div",
+						className: "remove",
+						style: "cursor: pointer;",
+						textContent: "❌"
+					}
+				]
 			}
 		]
 	})
 })
-
 
 UserInterface.bind("watchlist.entry", (element, watchList, entry) => {
 
@@ -35,8 +49,16 @@ UserInterface.bind("watchlist.entry", (element, watchList, entry) => {
 		}
 	}))
 
+	element.addEventListener("mouseout" , () => {
+		element.querySelector(".controls").style.visibility =  "hidden"
+	})
+
+	element.addEventListener("mouseover" , () => {
+		element.querySelector(".controls").style.visibility =  "initial"
+	})
+
 	element.querySelector(".remove").addEventListener("click" , () => {
-		UserInterface.announce(watchList, "entry remove", entry)
+		UserInterface.announce(watchList, "popup confirm open", { eventYes: "entry remove", eventNo: "entries popup", data: entry, text: "Are you sure?" })
 	})
 
 })
