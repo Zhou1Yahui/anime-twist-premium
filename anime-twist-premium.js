@@ -10,6 +10,8 @@
 // @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js/master/src/userinterface.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/userinterface.js-collection/master/userinterface/popup-confirm.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/object/atp.js
+// @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/data/search-engine.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/object/watch-list.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/object/watch-list-entry.js
 // @require       https://raw.githubusercontent.com/thoughtsunificator/anime-twist-premium/master/userinterface/watch-list-add.js

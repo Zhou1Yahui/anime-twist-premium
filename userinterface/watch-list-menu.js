@@ -1,6 +1,6 @@
 UserInterface.model({
 	name: "watchlist.menu",
-	method: UserInterface.appendChild,
+	method: UserInterface.insertBefore,
 	properties: {
 		tagName: "div",
 		className: "atp-watchlist-menu",
@@ -25,7 +25,6 @@ UserInterface.bind("watchlist.menu", async (element, watchList) => {
 	}
 
 	UserInterface.listen(watchList, "entry added", () => {
-		console.log("test")
 		watchListButton.disabled = false
 	})
 

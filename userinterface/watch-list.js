@@ -9,7 +9,7 @@ UserInterface.model({
 
 UserInterface.bind("watchlist", async (element) => {
 
-	const watchList = new WatchList()
+	const watchList = new ATP.WatchList()
 
 	let _nuxtCount = 0
 	let _pathname = location.pathname
@@ -26,50 +26,69 @@ UserInterface.bind("watchlist", async (element) => {
 	UserInterface.listen(watchList, "entry add", async data => {
 		const entry = watchList.addEntry(data)
 		watchList.entry = entry
-		UserInterface.announce(watchList, "entry set", entry)
 		UserInterface.announce(watchList, "entry added", entry)
 	})
 
 	UserInterface.listen(watchList, "entry remove", entry => {
 		watchList.removeEntry(entry)
+		watchList.entry = null
 		if(watchList.entries.length === 0) {
 			UserInterface.announce(watchList, "popup close")
 		}
 		UserInterface.announce(watchList, "entry removed", entry)
 	})
 
-	UserInterface.listen(watchList, "initialize", async () => {
-		await UserInterface.runModel("collection.popup", { parentNode: document.body, bindingArgs: [watchList] })
-		await UserInterface.runModel("watchlist.menu", { parentNode: element, bindingArgs: [watchList] })
-		await UserInterface.runModel("watchlist.add", { parentNode: element, bindingArgs: [watchList] })
+	UserInterface.listen(watchList, "entry clear", async () => {
+		for(const entry of watchList.entries) {
+			await UserInterface.announce(watchList, "entry remove", entry)
+		}
 	})
 
-	new MutationObserver(mutationsList => {
-		loop:for(let mutation of mutationsList) {
-			for(let addedNode of mutation.addedNodes) {
+	UserInterface.listen(watchList, "initialize", async () => {
+		await UserInterface.runModel("collection.popup", { parentNode: document.body, bindingArgs: [watchList] })
+		await UserInterface.runModel("watchlist.menu", {
+			parentNode: document.querySelector(".toggle-settings"),
+			bindingArgs: [watchList]
+		})
+		if(location.pathname.startsWith("/a/")) {
+			await UserInterface.runModel("watchlist.add", {
+				parentNode: document.querySelector(".video-data"),
+				bindingArgs: [watchList]
+			})
+		}
+	})
+
+	new MutationObserver(async mutationsList => {
+		loop:for(const mutation of mutationsList) {
+			for(const addedNode of mutation.addedNodes) {
 				if(location.pathname !== _pathname) {
 					UserInterface.announce(watchList, "pathname update", { previous: _pathname, current: location.pathname })
 					_pathname = location.pathname
-				}
-				if(addedNode.tagName === "BODY") {
-					document.body.appendChild(element)
 				}
 				if(addedNode.id === "__nuxt") {
 					_nuxtCount++
 				}
 				if(addedNode.tagName === "MAIN" || _nuxtCount === 2) { // FIX
-					// console.log("[atp] WatchList loaded")
+					if(addedNode.tagName === "BODY") {
+						document.body.appendChild(element)
+					}
+					console.log("[atp] WatchList loaded")
 					_nuxtCount = 0
-					if(watchList.state === WatchList.STATE_IDLE) {
-						watchList.state = WatchList.STATE_INITIALIZED
-						// console.log("[atp] Initializing")
+					if(watchList.state === ATP.WatchList.STATE_IDLE) {
+						watchList.state = ATP.WatchList.STATE_INITIALIZED
+						console.log("[atp] Initializing")
 						UserInterface.announce(watchList, "initialize")
-					} else if(watchList.state === WatchList.STATE_INITIALIZED) {
-						// console.log("[atp] Resetting entry")
+					} else if(watchList.state === ATP.WatchList.STATE_INITIALIZED) {
+						console.log("[atp] Resetting entry")
 						watchList.entries = []
 						watchList.entry = null
 						watchList.initialize(localStorage, location.pathname)
-						UserInterface.announce(watchList, "entry set", watchList.entry)
+						if(location.pathname.startsWith("/a/")) {
+							await UserInterface.runModel("watchlist.add", {
+								parentNode: document.querySelector(".video-data"),
+								bindingArgs: [watchList]
+							})
+						}
 					}
 					break loop
 				}

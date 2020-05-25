@@ -7,7 +7,7 @@ UserInterface.model({
 		className: "entry",
 		children: [
 			{
-				title: data.name,
+				title: data.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
 				tagName: "a",
 				href: data.url,
 				className: "name",
@@ -16,16 +16,21 @@ UserInterface.model({
 			{
 				tagName: "div",
 				className: "controls",
-				style: "display: grid; grid-auto-flow: column; grid-gap: 5px; visibility: hidden;",
+				style: "display: grid; grid-auto-flow: column; grid-gap: 5px; visibility: hidden",
 				children: [
-					{
+					...ATP.SEARCH_ENGINE_LIST.map(engine => ({
 						tagName: "a",
 						target: "_blank",
-						href: `https://anidb.net/anime/?adb.search=${data.name}&do.search=1`,
-						className: "lookup",
-						style: "cursor: pointer;",
-						textContent: "🔍"
-					},
+						title: `Lookup ${data.name} on ${engine.name}`,
+						href: engine.buildURL(data),
+						children: [
+							{
+								tagName: "img",
+								src: engine.icon,
+								width: 24
+							}
+						]
+					})),
 					{
 						tagName: "div",
 						className: "remove",

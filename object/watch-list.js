@@ -1,14 +1,14 @@
-function WatchList() {
+ATP.WatchList = function() {
 	this.entry = null
 	this.entries = []
-	this.state = WatchList.STATE_IDLE
+	this.state = ATP.WatchList.STATE_IDLE
 }
 
 /**
  * @param  {LocalStorage} localStorage
  * @param  {string}       pathname
  */
-WatchList.prototype.initialize = function(localStorage, pathname) {
+ATP.WatchList.prototype.initialize = function(localStorage, pathname) {
 	let entriesData = []
 	if(localStorage.getItem("entries") === null) {
 		localStorage.setItem("entries", JSON.stringify(this.entries))
@@ -16,7 +16,7 @@ WatchList.prototype.initialize = function(localStorage, pathname) {
 		entriesData = JSON.parse(localStorage.getItem("entries"))
 	}
 	entriesData.forEach(data => this.addEntry(data))
-	const entry = this.entries.find(entry => entry.slug === WatchList.slugify(pathname))
+	const entry = this.entries.find(entry => entry.slug === ATP.slugify(pathname))
 	if(entry) {
 		this.entry = entry
 	}
@@ -29,8 +29,8 @@ WatchList.prototype.initialize = function(localStorage, pathname) {
  * @param  {string} data.slug
  * @return {Entry}
  */
-WatchList.prototype.addEntry = function(data) {
-	const entry = new WatchListEntry(data.name, data.slug, data.completed)
+ATP.WatchList.prototype.addEntry = function(data) {
+	const entry = new ATP.WatchListEntry(data.name, data.slug, data.completed)
 	this.entries.push(entry)
 	localStorage.setItem("entries", JSON.stringify(this.entries))
 	return entry
@@ -39,18 +39,10 @@ WatchList.prototype.addEntry = function(data) {
 /**
  * @param  {Entry} entry
  */
-WatchList.prototype.removeEntry = function(entry) {
+ATP.WatchList.prototype.removeEntry = function(entry) {
 	this.entries.splice(this.entries.indexOf(entry), 1)
 	localStorage.setItem("entries", JSON.stringify(this.entries))
 }
 
-/**
- * @param  {string} pathname
- * @return {string}
- */
-WatchList.slugify = function(pathname) {
-	return pathname.split("/")[2]
-}
-
-WatchList.STATE_IDLE = "STATE_IDLE"
-WatchList.STATE_INITIALIZED = "STATE_INITIALIZED"
+ATP.WatchList.STATE_IDLE = "STATE_IDLE"
+ATP.WatchList.STATE_INITIALIZED = "STATE_INITIALIZED"
