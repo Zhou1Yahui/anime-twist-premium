@@ -9,7 +9,7 @@ UserInterface.model({
 	}
 })
 
-UserInterface.bind("watchlist.add", (element, watchList) => {
+UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 
 	const listeners = []
 
@@ -17,13 +17,12 @@ UserInterface.bind("watchlist.add", (element, watchList) => {
 		element.textContent = "🗑️"
 	}
 
-	if(document.location.pathname.startsWith("/a/")) {
+	if(ATP.isAnimePage(location.pathname)) {
 		element.style.display = "block"
 	}
 
-
-	listeners.push(UserInterface.listen(watchList, "pathname update", data => {
-		if(!data.current.startsWith("/a/")) {
+	listeners.push(UserInterface.listen(atp, "pathname update", data => {
+		if(ATP.isAnimePage(data.current) === false) {
 			listeners.forEach(listener => UserInterface.removeListener(listener))
 		}
 	}))
@@ -36,7 +35,7 @@ UserInterface.bind("watchlist.add", (element, watchList) => {
 		}
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "entry removed", entry => {
+	listeners.push(UserInterface.listen(watchList, "entry removed", () => {
 		if(watchList.entry === null) {
 			element.textContent = "➕"
 		} else {
@@ -48,7 +47,7 @@ UserInterface.bind("watchlist.add", (element, watchList) => {
 		if(watchList.entry === null) {
 			UserInterface.announce(watchList, "entry add", {
 				name: document.querySelector(".series-title").textContent.trim(),
-				slug: ATP.slugify(location.pathname)
+				slug: ATP.getSlug(location.pathname)
 			})
 		} else {
 			UserInterface.announce(watchList, "entry remove", watchList.entry)

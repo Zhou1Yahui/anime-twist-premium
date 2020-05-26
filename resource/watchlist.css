@@ -1,0 +1,24 @@
+#atp-watchlist {
+	position: absolute;
+	display: grid;
+	grid-gap: 10px;
+}
+
+atp-watch-list-entries {
+	display: none;
+	z-index: 1;
+}
+
+atp-watch-list-entries.show {
+	display: block;
+}
+
+atp-watch-list-entry {
+	color: #ffffffb3;
+	background-color: #cececf4d;
+	padding: 5px;
+}
+
+atp-watch-list-entry:nth-child(even) {
+	background-color: #b065724d;
+}

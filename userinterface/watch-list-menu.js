@@ -16,7 +16,7 @@ UserInterface.model({
 	}
 })
 
-UserInterface.bind("watchlist.menu", async (element, watchList) => {
+UserInterface.bind("watchlist.menu", async (element, atp, watchList) => {
 
 	const watchListButton = element.querySelector(".watchlist")
 

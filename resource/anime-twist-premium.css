@@ -1,28 +1,3 @@
-#atp {
-	position: absolute;
-	display: grid;
-	grid-gap: 10px;
-}
-
-.atp-watchlist-menu .entries {
-	display: none;
-	z-index: 1;
-}
-
-.atp-watchlist-menu .entries.show {
-	display: block;
-}
-
-.atp-watchlist-menu .entry {
-	color: #ffffffb3;
-	background-color: #cececf4d;
-	padding: 5px;
-}
-
-.atp-watchlist-menu .entry:nth-child(even) {
-	background-color: #b065724d;
-}
-
 .popup-body {
 	max-width: 840px !important;
 	max-height: 100vh !important;

@@ -4,7 +4,7 @@ UserInterface.model({
 	callback: data => ({
 		tagName: "div",
 		style: "display: grid; grid-template-columns: 1fr auto; grid-gap: 15px",
-		className: "entry",
+		className: "atp-watch-list-entry",
 		children: [
 			{
 				title: data.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
@@ -43,7 +43,7 @@ UserInterface.model({
 	})
 })
 
-UserInterface.bind("watchlist.entry", (element, watchList, entry) => {
+UserInterface.bind("watchlist.entry", (element, atp, watchList, entry) => {
 
 	const listeners = []
 
@@ -63,7 +63,7 @@ UserInterface.bind("watchlist.entry", (element, watchList, entry) => {
 	})
 
 	element.querySelector(".remove").addEventListener("click" , () => {
-		UserInterface.announce(watchList, "popup confirm open", { eventYes: "entry remove", eventNo: "entries popup", data: entry, text: "Are you sure?" })
+		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", eventNo: "watchlist entries popup", data: entry, text: "Are you sure?" })
 	})
 
 })

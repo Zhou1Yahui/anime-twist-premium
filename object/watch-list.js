@@ -1,7 +1,6 @@
 ATP.WatchList = function() {
 	this.entry = null
 	this.entries = []
-	this.state = ATP.WatchList.STATE_IDLE
 }
 
 /**
@@ -16,11 +15,6 @@ ATP.WatchList.prototype.initialize = function(localStorage, pathname) {
 		entriesData = JSON.parse(localStorage.getItem("entries"))
 	}
 	entriesData.forEach(data => this.addEntry(data))
-	const entry = this.entries.find(entry => entry.slug === ATP.slugify(pathname))
-	if(entry) {
-		this.entry = entry
-	}
-	// console.log("entry", entry)
 }
 
 /**
@@ -43,6 +37,3 @@ ATP.WatchList.prototype.removeEntry = function(entry) {
 	this.entries.splice(this.entries.indexOf(entry), 1)
 	localStorage.setItem("entries", JSON.stringify(this.entries))
 }
-
-ATP.WatchList.STATE_IDLE = "STATE_IDLE"
-ATP.WatchList.STATE_INITIALIZED = "STATE_INITIALIZED"
