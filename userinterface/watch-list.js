@@ -10,6 +10,7 @@ UserInterface.model({
 UserInterface.bind("watchlist", async (element, atp) => {
 
 	const watchList = new ATP.WatchList()
+	ATP.watchList = watchList
 
 	let _menuRendered = false
 

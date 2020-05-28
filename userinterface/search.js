@@ -11,13 +11,15 @@ UserInterface.bind("search", async (element, atp) => {
 
 	const search = new ATP.Search()
 
-
 	UserInterface.listen(atp, "search entry navigate", (entry) => {
 		window.location.href = ATP.buildAnimeURL(entry.slug)
 	})
 
 	UserInterface.listen(atp, "page rendered", async () => {
 		ATP.log("[atp] Rendering search...")
+
+		search.clearEntries()
+
 		if(ATP.isAnimePage(location.pathname) === false) {
 			const seriesNode = document.querySelector(".series");
 			const seriesNodes = document.querySelectorAll(".series li");

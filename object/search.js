@@ -16,5 +16,12 @@ ATP.Search.prototype.addEntry = function(data) {
 }
 
 ATP.Search.prototype.getRandomEntry = function() {
-	return this.entries[Math.floor(Math.random()*this.entries.length)]
+	const entries = this.entries.filter(entry => !ATP.watchList.entries.find(entry_ => entry_.slug === entry.slug))
+	console.log(this.entries)
+	console.log(entries.length)
+	return entries[Math.floor(Math.random()*this.entries.length)]
+}
+
+ATP.Search.prototype.clearEntries = function() {
+	this.entries = []
 }
