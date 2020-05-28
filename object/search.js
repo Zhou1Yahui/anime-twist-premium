@@ -9,6 +9,7 @@ ATP.Search = function() {
  * @return {SearchEntry}
  */
 ATP.Search.prototype.addEntry = function(data) {
+	console.log("[atp] Adding a new search entry...")
 	const entry = new ATP.SearchEntry(data.title, data.slug)
 	this.entries.push(entry)
 	return entry

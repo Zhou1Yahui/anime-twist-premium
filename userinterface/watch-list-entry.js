@@ -3,9 +3,14 @@ UserInterface.model({
 	method: UserInterface.appendChild,
 	callback: data => ({
 		tagName: "div",
-		style: "display: grid; grid-template-columns: 1fr auto; grid-gap: 15px",
 		className: "atp-watch-list-entry",
 		children: [
+			{
+				tagName: "button",
+				className: "state",
+				title: "Mark as watched",
+				textContent: data.state === ATP.WatchListEntry.STATE_COMPLETED ? "❌" : "✔️"
+			},
 			{
 				title: data.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
 				tagName: "a",
@@ -16,7 +21,6 @@ UserInterface.model({
 			{
 				tagName: "div",
 				className: "controls",
-				style: "display: grid; grid-auto-flow: column; grid-gap: 5px; visibility: hidden",
 				children: [
 					...ATP.SEARCH_ENGINE_LIST.map(engine => ({
 						tagName: "a",
@@ -32,10 +36,11 @@ UserInterface.model({
 						]
 					})),
 					{
-						tagName: "div",
+						tagName: "button",
+						title: "Remove this entry",
 						className: "remove",
 						style: "cursor: pointer;",
-						textContent: "❌"
+						textContent: "🗑️"
 					}
 				]
 			}
@@ -47,23 +52,18 @@ UserInterface.bind("watchlist.entry", (element, atp, watchList, entry) => {
 
 	const listeners = []
 
-	listeners.push(UserInterface.listen(watchList, "entry remove", entry_ => {
-		if(entry_ === entry) {
-			listeners.forEach(listener => UserInterface.removeListener(listener))
-			element.remove()
-		}
+	listeners.push(UserInterface.listen(entry, "remove", () => {
+		listeners.forEach(listener => UserInterface.removeListener(listener))
+		element.remove()
 	}))
 
-	element.addEventListener("mouseout" , () => {
-		element.querySelector(".controls").style.visibility =  "hidden"
-	})
-
-	element.addEventListener("mouseover" , () => {
-		element.querySelector(".controls").style.visibility =  "initial"
+	element.querySelector(".state").addEventListener("click" , event => {
+		element.remove()
+		UserInterface.announce(watchList, "entry update", { entry,  data: { state: event.target.textContent === "✔️" ? ATP.WatchListEntry.STATE_COMPLETED : ATP.WatchListEntry.STATE_WATCHING } })
 	})
 
 	element.querySelector(".remove").addEventListener("click" , () => {
-		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", eventNo: "watchlist entries popup", data: entry, text: "Are you sure?" })
+		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", eventNo: "watchlist entries popup", data: { entry, popup: true }, text: "Are you sure?" })
 	})
 
 })

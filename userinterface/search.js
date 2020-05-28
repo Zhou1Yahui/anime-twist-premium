@@ -17,24 +17,26 @@ UserInterface.bind("search", async (element, atp) => {
 	})
 
 	UserInterface.listen(atp, "page rendered", async () => {
+		ATP.log("[atp] Rendering search...")
+		if(ATP.isAnimePage(location.pathname) === false) {
+			const seriesNode = document.querySelector(".series");
+			const seriesNodes = document.querySelectorAll(".series li");
 
-		const seriesNode = document.querySelector(".series");
-		const seriesNodes = document.querySelectorAll(".series li");
-
-		[...seriesNodes].forEach(seriesNode => {
-			const titleNode = seriesNode.querySelector(".series-title")
-			search.addEntry({
-				title: titleNode.textContent.trim(),
-				slug: ATP.getSlug(titleNode.href)
+			[...seriesNodes].forEach(seriesNode => {
+				const titleNode = seriesNode.querySelector(".series-title")
+				search.addEntry({
+					title: titleNode.textContent.trim(),
+					slug: ATP.getSlug(titleNode.href)
+				})
 			})
-		})
 
-		seriesNode.parentNode.classList.add("atp-search")
+			seriesNode.parentNode.classList.add("atp-search")
 
-		await UserInterface.runModel("search.random", {
-			parentNode: seriesNode,
-			bindingArgs: [atp, search]
-		})
+			await UserInterface.runModel("search.random", {
+				parentNode: seriesNode,
+				bindingArgs: [atp, search]
+			})
+		}
 	})
 
 })

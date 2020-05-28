@@ -12,13 +12,14 @@ UserInterface.bind("atp", async (element) => {
 	const atp = new ATP()
 
 	let _pathname = location.pathname
+	let _observer
 
 	await UserInterface.runModel("collection.popup", { parentNode: element, bindingArgs: [atp] })
 
 	await UserInterface.runModel("watchlist", { parentNode: element, bindingArgs: [atp] })
 	await UserInterface.runModel("search", { parentNode: element, bindingArgs: [atp] })
 
-	new MutationObserver(async mutationsList => {
+	_observer = new MutationObserver(async mutationsList => {
 		loop:for(const mutation of mutationsList) {
 			for(const addedNode of mutation.addedNodes) {
 				if(location.pathname !== _pathname) {
@@ -29,16 +30,22 @@ UserInterface.bind("atp", async (element) => {
 					document.body.appendChild(element)
 				}
 				if(atp.state === ATP.STATE_RENDERED && addedNode.parentNode.classList.contains("main-column")) {
+					ATP.log("[atp] Changing page: resetting state to RENDERING")
 					atp.state = ATP.STATE_RENDERING
 					break
 				}
 				if((atp.state === ATP.STATE_RENDERING || atp.state === ATP.STATE_IDLE) && document.querySelector(".root-container") !== null) {
+					ATP.log("[atp] Page rendered: changing _observer target")
+					_observer.disconnect()
+					_observer.observe(document.querySelector(".main-column"), { childList: true })
 					atp.state = ATP.STATE_RENDERED
 					await UserInterface.announce(atp, "page rendered")
 					break loop
 				}
 			}
 		}
-	}).observe(document.documentElement, { childList: true, subtree: true })
+	})
+
+	_observer.observe(document.documentElement, { childList: true, subtree: true })
 
 })

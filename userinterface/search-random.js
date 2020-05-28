@@ -3,6 +3,7 @@ UserInterface.model({
 	method: UserInterface.insertBefore,
 	properties: {
 		tagName: "button",
+		id: "atp-search-random",
 		textContent: "🎲"
 	}
 })
@@ -11,7 +12,7 @@ UserInterface.bind("search.random", async (element, atp, search) => {
 
 	element.addEventListener("click", () => {
 		const entry = search.getRandomEntry()
-		UserInterface.announce(atp, "popup confirm open", { eventYes: "search entry navigate", data: entry, text: `Go for ${entry.title}?` })
+		UserInterface.announce(atp, "popup confirm open", { eventYes: "search entry navigate", data: entry, text: entry.title })
 	})
 
 })
