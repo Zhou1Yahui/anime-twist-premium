@@ -1,0 +1,8 @@
+.atp-search {
+	display: grid;
+	grid-template-columns: 1fr auto;
+}
+
+.atp-search.series {
+	grid-row: 3;
+}

@@ -46,7 +46,7 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 	listeners.push(element.addEventListener("click", () => {
 		if(watchList.entry === null) {
 			UserInterface.announce(watchList, "entry add", {
-				name: document.querySelector(".series-title").textContent.trim(),
+				title: document.querySelector(".series-title").textContent.trim(),
 				slug: ATP.getSlug(location.pathname)
 			})
 		} else {

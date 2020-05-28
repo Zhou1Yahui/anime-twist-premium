@@ -2,7 +2,6 @@ ATP = function() {
 	this.state = ATP.STATE_IDLE
 }
 
-
 /**
  * @param  {string} slug
  * @return {string}
@@ -16,7 +15,9 @@ ATP.buildAnimeURL = slug => {
  * @return {string}
  */
 ATP.getSlug = pathname => {
-	return pathname.split("/")[2]
+	if(pathname.includes("/a/")) {
+		return pathname.split("/a/")[1].split("/")[0]
+	}
 }
 
 /**

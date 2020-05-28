@@ -11,7 +11,7 @@ UserInterface.model({
 				tagName: "a",
 				href: data.url,
 				className: "name",
-				textContent: data.name
+				textContent: data.title
 			},
 			{
 				tagName: "div",
@@ -21,7 +21,7 @@ UserInterface.model({
 					...ATP.SEARCH_ENGINE_LIST.map(engine => ({
 						tagName: "a",
 						target: "_blank",
-						title: `Lookup ${data.name} on ${engine.name}`,
+						title: `Lookup ${data.title} on ${engine.name}`,
 						href: engine.buildURL(data),
 						children: [
 							{

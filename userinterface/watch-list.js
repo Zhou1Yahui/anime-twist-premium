@@ -13,7 +13,7 @@ UserInterface.bind("watchlist", async (element, atp) => {
 
 	let _menuLoaded = false
 
-	watchList.initialize(localStorage, location.pathname)
+	watchList.initialize(localStorage)
 
 	UserInterface.listen(atp, "page rendered", async () => {
 		const entry = watchList.entries.find(entry => entry.slug === ATP.getSlug(location.pathname))

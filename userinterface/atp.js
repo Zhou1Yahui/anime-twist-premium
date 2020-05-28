@@ -16,6 +16,7 @@ UserInterface.bind("atp", async (element) => {
 	await UserInterface.runModel("collection.popup", { parentNode: element, bindingArgs: [atp] })
 
 	await UserInterface.runModel("watchlist", { parentNode: element, bindingArgs: [atp] })
+	await UserInterface.runModel("search", { parentNode: element, bindingArgs: [atp] })
 
 	new MutationObserver(async mutationsList => {
 		loop:for(const mutation of mutationsList) {
