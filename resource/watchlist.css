@@ -1,7 +1,11 @@
 @media screen and (max-width: 840px) {
 	#atp-watch-list-entries {
 		min-width: 100vw !important;
+		min-height: 100vh !important;
 		padding: 20px;
+	}
+	#atp-watch-list-entries  .close {
+		display: initial !important;
 	}
 }
 
@@ -17,6 +21,10 @@
 	grid-gap: 10px;
 }
 
+#atp-watch-list-entries  .close {
+	display: none;
+}
+
 #atp-watch-list-entries h2 {
 	border-bottom: 1px solid #80808036;
 	padding-bottom: 5px;
@@ -28,6 +36,7 @@
 	display: grid;
 	padding: 5px;
 	grid-gap: 10px;
+	box-shadow: inset 0px -6px 7px #0000004f;
 }
 
 #atp-watch-list-entries .controls {

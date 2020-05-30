@@ -1,3 +1,14 @@
+@media screen and (max-width: 840px) {
+	#popup {
+		z-index: 4 !important;
+		overflow: auto;
+	}
+	.toggles {
+		display: grid;
+		grid-auto-flow: column
+	}
+}
+
 .popup-body {
 	max-width: 840px !important;
 	max-height: 100vh !important;
@@ -12,7 +23,6 @@
 }
 
 .series .completed .series-title:before {
-	/* background-color: #0080261c; */
 	padding-right: 10px;
 	font-size: 1.2rem;
 	content: "✔️";
@@ -26,7 +36,6 @@
 	align-content: center;
 	padding-right: 10px;
 	font-size: 1.2rem;
-/* 	background-color: #8080801c; */
 }
 
 .series .watching .series-title:before {
@@ -35,5 +44,4 @@
 	align-content: center;
 	padding-right: 10px;
 	font-size: 1.2rem;
-	/* background-color: #65a9f21c; */
 }

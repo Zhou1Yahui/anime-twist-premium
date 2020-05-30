@@ -6,6 +6,11 @@ UserInterface.model({
 		id: "atp-watch-list-entries",
 		children: [
 			{
+				tagName: "button",
+				className: "close",
+				textContent: "Close"
+			},
+			{
 				tagName: "h2",
 				textContent: "Watching"
 			},
@@ -101,6 +106,10 @@ UserInterface.bind("watchlist.entries", async (element, atp, watchList) => {
 
 	element.querySelector(".import").addEventListener("click" , () => {
 		UserInterface.announce(watchList, "import")
+	})
+
+	element.querySelector(".close").addEventListener("click" , () => {
+		UserInterface.announce(atp, "popup close")
 	})
 
 	UserInterface.announce(watchList, "entries render")
