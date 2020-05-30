@@ -1,11 +1,18 @@
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 500px) {
 	#atp-watch-list-entries {
-		min-width: 100vw !important;
-		min-height: 100vh !important;
 		padding: 20px;
+		min-height: 100vh !important;
+		min-width: 100vw !important;
+		grid-template-rows: 1fr 1fr 1fr auto;
 	}
+
 	#atp-watch-list-entries  .close {
 		display: initial !important;
+	}
+
+	#atp-watch-list-entries footer {
+		padding-bottom: 10px;
+		grid-template-rows: auto auto;
 	}
 }
 
@@ -36,16 +43,20 @@
 	display: grid;
 	padding: 5px;
 	grid-gap: 10px;
-	box-shadow: inset 0px -6px 7px #0000004f;
 }
 
-#atp-watch-list-entries .controls {
-	margin-top: 5px;
+#atp-watch-list-entries .list:not(:empty) + p {
+	display: none;
+}
+
+#atp-watch-list-entries footer {
+	margin-top: 15px;
 	display: grid;
 	grid-gap: 10px;
+	grid-auto-flow: column;
 }
 
-#atp-watch-list-entries .controls .clear {
+#atp-watch-list-entries footer .clear {
 	background-color: #ff000026;
 }
 

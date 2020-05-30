@@ -6,37 +6,61 @@ UserInterface.model({
 		id: "atp-watch-list-entries",
 		children: [
 			{
-				tagName: "button",
-				className: "close",
-				textContent: "Close"
-			},
-			{
-				tagName: "h2",
-				textContent: "Watching"
+				tagName: "div",
+				children: [
+					{
+						tagName: "h2",
+						textContent: "Watching"
+					},
+					{
+						tagName: "div",
+						className: "list watching"
+					},
+					{
+						tagName: "p",
+						className: "no-result",
+						textContent: "There's nothing here."
+					}
+				]
 			},
 			{
 				tagName: "div",
-				className: "list watching"
-			},
-			{
-				tagName: "h2",
-				textContent: "Completed"
+				children: [
+					{
+						tagName: "h2",
+						textContent: "Completed"
+					},
+					{
+						tagName: "div",
+						className: "list completed",
+					},
+					{
+						tagName: "p",
+						className: "no-result",
+						textContent: "There's nothing here."
+					}
+				]
 			},
 			{
 				tagName: "div",
-				className: "list completed"
+				children: [
+					{
+						tagName: "h2",
+						textContent: "Plan to watch"
+					},
+					{
+						tagName: "div",
+						className: "list plan-to-watch",
+					},
+					{
+						tagName: "p",
+						className: "no-result",
+						textContent: "There's nothing here."
+					}
+				]
 			},
 			{
-				tagName: "h2",
-				textContent: "Plan to watch"
-			},
-			{
-				tagName: "div",
-				className: "list plan-to-watch"
-			},
-			{
-				tagName: "div",
-				className: "controls",
+				tagName: "footer",
 				children: [
 					{
 						tagName: "button",
@@ -52,7 +76,12 @@ UserInterface.model({
 						tagName: "button",
 						className: "import",
 						textContent: "Import"
-					}
+					},
+					{
+						tagName: "button",
+						className: "close",
+						textContent: "Close"
+					},
 				]
 			}
 		]
@@ -69,12 +98,13 @@ UserInterface.bind("watchlist.entries", async (element, atp, watchList) => {
 
 	listeners.push(UserInterface.listen(watchList, "entries render", async () => {
 		ATP.log("[atp] Rendering watchlist entries...", watchList.entries.length)
+
 		for(const entry of watchList.entries) {
 			let entriesNode
-			if(entry.state === ATP.WatchListEntry.STATE_COMPLETED) {
-				entriesNode = element.querySelector(".list.completed")
-			} else if(entry.state === ATP.WatchListEntry.STATE_WATCHING) {
+			if(entry.state === ATP.WatchListEntry.STATE_WATCHING) {
 				entriesNode = element.querySelector(".list.watching")
+			} else if(entry.state === ATP.WatchListEntry.STATE_COMPLETED) {
+				entriesNode = element.querySelector(".list.completed")
 			} else  {
 				entriesNode = element.querySelector(".list.plan-to-watch")
 			}
