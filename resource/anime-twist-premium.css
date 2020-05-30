@@ -10,3 +10,30 @@
 	margin: 0 auto !important;
 	border: 0 !important;
 }
+
+.series .completed .series-title:before {
+	/* background-color: #0080261c; */
+	padding-right: 10px;
+	font-size: 1.2rem;
+	content: "✔️";
+	display: grid;
+	align-content: center;
+}
+
+.series .plan-to-watch .series-title:before {
+	content: "⏱️";
+	display: grid;
+	align-content: center;
+	padding-right: 10px;
+	font-size: 1.2rem;
+/* 	background-color: #8080801c; */
+}
+
+.series .watching .series-title:before {
+	content: "📺";
+	display: grid;
+	align-content: center;
+	padding-right: 10px;
+	font-size: 1.2rem;
+	/* background-color: #65a9f21c; */
+}

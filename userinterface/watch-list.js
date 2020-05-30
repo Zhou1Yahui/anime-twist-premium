@@ -57,6 +57,12 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		UserInterface.announce(watchList, "entries popup")
 	})
 
+	UserInterface.listen(atp, "watchlist entry add", data => {
+		console.log(data)
+		UserInterface.announce(watchList, "entry add", data)
+		UserInterface.announce(atp, "popup close")
+	})
+
 	UserInterface.listen(watchList, "entries popup", () => {
 		UserInterface.announce(atp, "popup open", {
 			model: "watchlist.entries",
@@ -64,6 +70,7 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		})
 	})
 	UserInterface.listen(watchList, "entry add", async data => {
+		console.log(data)
 		const entry = watchList.addEntry(data)
 		watchList.entry = entry
 		UserInterface.announce(watchList, "entry added", entry)

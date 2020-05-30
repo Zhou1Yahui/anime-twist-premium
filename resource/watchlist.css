@@ -22,8 +22,9 @@
 	padding-bottom: 5px;
 }
 
-#atp-watch-list-entries .entries-watching,
-#atp-watch-list-entries .entries-completed {
+#atp-watch-list-entries .list {
+	max-height: 20vh;
+	overflow: auto;
 	display: grid;
 	padding: 5px;
 	grid-gap: 10px;

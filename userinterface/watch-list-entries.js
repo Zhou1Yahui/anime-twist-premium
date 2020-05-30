@@ -11,7 +11,7 @@ UserInterface.model({
 			},
 			{
 				tagName: "div",
-				className: "entries-watching"
+				className: "list watching"
 			},
 			{
 				tagName: "h2",
@@ -19,7 +19,15 @@ UserInterface.model({
 			},
 			{
 				tagName: "div",
-				className: "entries-completed"
+				className: "list completed"
+			},
+			{
+				tagName: "h2",
+				textContent: "Plan to watch"
+			},
+			{
+				tagName: "div",
+				className: "list plan-to-watch"
 			},
 			{
 				tagName: "div",
@@ -59,9 +67,11 @@ UserInterface.bind("watchlist.entries", async (element, atp, watchList) => {
 		for(const entry of watchList.entries) {
 			let entriesNode
 			if(entry.state === ATP.WatchListEntry.STATE_COMPLETED) {
-				entriesNode = element.querySelector(".entries-completed")
-			} else {
-				entriesNode = element.querySelector(".entries-watching")
+				entriesNode = element.querySelector(".list.completed")
+			} else if(entry.state === ATP.WatchListEntry.STATE_WATCHING) {
+				entriesNode = element.querySelector(".list.watching")
+			} else  {
+				entriesNode = element.querySelector(".list.plan-to-watch")
 			}
 			await UserInterface.runModel("watchlist.entry", { data: entry, parentNode: entriesNode, bindingArgs: [atp, watchList, entry] })
 		}
@@ -71,9 +81,11 @@ UserInterface.bind("watchlist.entries", async (element, atp, watchList) => {
 		if(data.data.state) {
 			let entriesNode
 			if(data.data.state === ATP.WatchListEntry.STATE_COMPLETED) {
-				entriesNode = element.querySelector(".entries-completed")
-			} else {
-				entriesNode = element.querySelector(".entries-watching")
+				entriesNode = element.querySelector(".list.completed")
+			} else if(data.data.state === ATP.WatchListEntry.STATE_WATCHING) {
+				entriesNode = element.querySelector(".list.watching")
+			} else  {
+				entriesNode = element.querySelector(".list.plan-to-watch")
 			}
 			await UserInterface.runModel("watchlist.entry", { data: data.entry, parentNode: entriesNode, bindingArgs: [atp, watchList, data.entry] })
 		}

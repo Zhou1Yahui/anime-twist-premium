@@ -8,8 +8,8 @@ UserInterface.model({
 			{
 				tagName: "button",
 				className: "state",
-				title: "Mark as watched",
-				textContent: data.state === ATP.WatchListEntry.STATE_COMPLETED ? "❌" : "✔️"
+				title: data.state === ATP.WatchListEntry.STATE_COMPLETED || data.state === ATP.WatchListEntry.STATE_PLAN_TO_WATCH ? "Mark as watching" : "Mark as watched",
+				textContent: data.state === ATP.WatchListEntry.STATE_COMPLETED ? "❌" : data.state === ATP.WatchListEntry.STATE_PLAN_TO_WATCH ? "📺" : "✔️"
 			},
 			{
 				title: data.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
@@ -59,7 +59,7 @@ UserInterface.bind("watchlist.entry", (element, atp, watchList, entry) => {
 
 	element.querySelector(".state").addEventListener("click" , event => {
 		element.remove()
-		UserInterface.announce(watchList, "entry update", { entry,  data: { state: event.target.textContent === "✔️" ? ATP.WatchListEntry.STATE_COMPLETED : ATP.WatchListEntry.STATE_WATCHING } })
+		UserInterface.announce(watchList, "entry update", { entry,  data: { state: event.target.textContent === "✔️" ? ATP.WatchListEntry.STATE_COMPLETED : event.target.textContent === "📺" || event.target.textContent === "❌" ? ATP.WatchListEntry.STATE_WATCHING : ATP.WatchListEntry.STATE_PLAN_TO_WATCH  } })
 	})
 
 	element.querySelector(".remove").addEventListener("click" , () => {

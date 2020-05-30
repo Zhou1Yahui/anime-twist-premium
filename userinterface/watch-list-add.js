@@ -54,11 +54,44 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 
 	element.addEventListener("click", () => {
 		if(watchList.entry === null) {
-			UserInterface.announce(watchList, "entry add", {
-				title: document.querySelector(".series-title").textContent.trim(),
-				slug: ATP.getSlug(location.pathname),
-				state: ATP.WatchListEntry.STATE_WATCHING
-			})
+			const entry = {
+					title: document.querySelector(".series-title").textContent.trim(),
+					slug: ATP.getSlug(location.pathname)
+			}
+			UserInterface.announce(atp, "popup controls open", [
+				{
+					text: "Watching",
+					action: "watchlist entry add",
+					model: "collection.button",
+					value: {
+						...entry,
+						state: ATP.WatchListEntry.STATE_WATCHING
+					}
+				},
+				{
+					text: "Completed",
+					action: "watchlist entry add",
+					model: "collection.button",
+					value: {
+						...entry,
+						state: ATP.WatchListEntry.STATE_COMPLETED
+					}
+				},
+				{
+					text: "Plan to Watch",
+					action: "watchlist entry add",
+					model: "collection.button",
+					value: {
+						...entry,
+						state: ATP.WatchListEntry.STATE_PLAN_TO_WATCH
+					}
+				}
+			])
+			// UserInterface.announce(watchList, "entry add", {
+			// 	title: document.querySelector(".series-title").textContent.trim(),
+			// 	slug: ATP.getSlug(location.pathname),
+			// 	state: ATP.WatchListEntry.STATE_WATCHING
+			// })
 		} else {
 			UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", data: { entry: watchList.entry }, text: "Are you sure?" })
 		}
