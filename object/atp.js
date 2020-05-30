@@ -2,7 +2,7 @@ ATP = function() {
 	this.state = ATP.STATE_IDLE
 }
 
-ATP.DEBUG = true
+ATP.DEBUG = false
 ATP.LOGS_MAXIMUM_ITEMS = 15
 
 ATP.log = function() {
