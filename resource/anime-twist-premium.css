@@ -1,6 +1,6 @@
 @media screen and (max-width: 840px) {
 	#popup {
-		z-index: 4 !important;
+		z-index: 30 !important;
 		overflow: auto;
 	}
 	.toggles {

@@ -30,6 +30,7 @@ UserInterface.model({
 						children: [
 							{
 								tagName: "img",
+								alt: engine.name,
 								src: engine.icon,
 								width: 24
 							}
@@ -63,7 +64,7 @@ UserInterface.bind("watchlist.entry", (element, atp, watchList, entry) => {
 	})
 
 	element.querySelector(".remove").addEventListener("click" , () => {
-		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", eventNo: "watchlist entries popup", data: { entry, popup: true }, text: "Are you sure?" })
+		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entry remove", eventNo: "watchlist lists popup", data: { entry, popup: true }, text: "Are you sure?" })
 	})
 
 })

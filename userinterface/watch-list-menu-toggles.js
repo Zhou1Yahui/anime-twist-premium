@@ -10,7 +10,7 @@ UserInterface.model({
 UserInterface.bind("watchlist.menu-toggles", async (element, atp, watchList) => {
 
 	element.addEventListener("click", () => {
-		UserInterface.announce(watchList, "entries popup")
+		UserInterface.announce(watchList, "lists popup")
 	})
 
 })

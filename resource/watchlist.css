@@ -1,18 +1,32 @@
 @media screen and (max-width: 500px) {
-	#atp-watch-list-entries {
+	#atp-watch-lists {
 		padding: 20px;
 		min-height: 100vh !important;
 		min-width: 100vw !important;
-		grid-template-rows: 1fr 1fr 1fr auto;
+		grid-template-rows: 1fr auto;
 	}
 
-	#atp-watch-list-entries  .close {
-		display: initial !important;
+	#atp-watch-lists .lists {
+		grid-auto-rows: initial !important;
 	}
 
-	#atp-watch-list-entries footer {
+	.atp-watch-list-entry {
+		grid-template-columns: auto 1fr !important;
+		grid-auto-columns: max-content;
+	}
+
+	.atp-watch-list-entry .controls {
+		justify-content: flex-end;
+		grid-column: 2;
+	}
+
+	#atp-watch-lists footer {
 		padding-bottom: 10px;
 		grid-template-rows: auto auto;
+	}
+
+	#atp-watch-lists  .close {
+		display: initial !important;
 	}
 }
 
@@ -22,22 +36,29 @@
 	grid-gap: 10px;
 }
 
-#atp-watch-list-entries {
+#atp-watch-lists {
 	min-width: 450px;
 	display: grid;
 	grid-gap: 10px;
 }
 
-#atp-watch-list-entries  .close {
+#atp-watch-lists .close {
 	display: none;
 }
 
-#atp-watch-list-entries h2 {
-	border-bottom: 1px solid #80808036;
-	padding-bottom: 5px;
+#atp-watch-lists .lists {
+	display: grid;
+	grid-gap: 20px;
+	grid-auto-rows: max-content;
 }
 
-#atp-watch-list-entries .list {
+#atp-watch-lists .lists .title {
+	border-bottom: 1px solid #80808036;
+	padding-bottom: 5px;
+	cursor: pointer;
+}
+
+#atp-watch-lists .list .entries {
 	max-height: 20vh;
 	overflow: auto;
 	display: grid;
@@ -45,23 +66,28 @@
 	grid-gap: 10px;
 }
 
-#atp-watch-list-entries .list:not(:empty) + p {
+#atp-watch-lists .list.hidden .entries,
+#atp-watch-lists .list.hidden p {
+	display: none
+}
+
+#atp-watch-lists .list .entries:empty {
 	display: none;
 }
 
-#atp-watch-list-entries footer {
+#atp-watch-lists .list .entries:not(:empty) + p {
+	display: none;
+}
+
+#atp-watch-lists footer {
 	margin-top: 15px;
 	display: grid;
 	grid-gap: 10px;
 	grid-auto-flow: column;
 }
 
-#atp-watch-list-entries footer .clear {
+#atp-watch-lists footer .clear {
 	background-color: #ff000026;
-}
-
-.entries-completed .atp-watch-list-entry {
-	background-color: #0080260d;
 }
 
 .atp-watch-list-entry {

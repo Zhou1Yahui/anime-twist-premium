@@ -11,7 +11,7 @@ UserInterface.model({
 UserInterface.bind("search.random", async (element, atp, search) => {
 
 	element.addEventListener("click", () => {
-		const entry = search.getRandomEntry()
+		const entry = search.getRandomEntry(atp.watchList.entries)
 		UserInterface.announce(atp, "popup confirm open", { eventYes: "search entry navigate", data: entry, text: entry.title })
 	})
 

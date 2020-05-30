@@ -10,7 +10,7 @@ UserInterface.model({
 UserInterface.bind("watchlist", async (element, atp) => {
 
 	const watchList = new ATP.WatchList()
-	ATP.watchList = watchList
+	atp.watchList = watchList
 
 	let _menuRendered = false
 
@@ -41,36 +41,34 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		}
 	})
 
-	UserInterface.listen(atp, "watchlist entries popup", () => {
-		UserInterface.announce(watchList, "entries popup")
+	UserInterface.listen(atp, "watchlist lists popup", () => {
+		UserInterface.announce(watchList, "lists popup")
 	})
 
 	UserInterface.listen(atp, "watchlist entry remove", async data => {
 		await UserInterface.announce(watchList, "entry remove", data.entry)
 		if(data.popup) {
-			UserInterface.announce(watchList, "entries popup")
+			UserInterface.announce(watchList, "lists popup")
 		}
 	})
 
 	UserInterface.listen(atp, "watchlist entries clear", async () => {
 		await UserInterface.announce(watchList, "entries clear")
-		UserInterface.announce(watchList, "entries popup")
+		UserInterface.announce(watchList, "lists popup")
 	})
 
 	UserInterface.listen(atp, "watchlist entry add", data => {
-		console.log(data)
 		UserInterface.announce(watchList, "entry add", data)
 		UserInterface.announce(atp, "popup close")
 	})
 
-	UserInterface.listen(watchList, "entries popup", () => {
+	UserInterface.listen(watchList, "lists popup", () => {
 		UserInterface.announce(atp, "popup open", {
-			model: "watchlist.entries",
+			model: "watchlist.lists",
 			bindingArgs: [atp, watchList]
 		})
 	})
 	UserInterface.listen(watchList, "entry add", async data => {
-		console.log(data)
 		const entry = watchList.addEntry(data)
 		watchList.entry = entry
 		UserInterface.announce(watchList, "entry added", entry)
@@ -109,7 +107,8 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		for(const entry of entries) {
 			watchList.addEntry(entry)
 		}
-		UserInterface.announce(watchList, "entries render")
+		UserInterface.announce(watchList, "entries updated")
+		UserInterface.announce(watchList, "lists render")
 	})
 
 	UserInterface.listen(watchList, "export", () => {

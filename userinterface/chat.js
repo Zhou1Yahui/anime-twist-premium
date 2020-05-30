@@ -42,7 +42,7 @@ UserInterface.bind("chat", async (element, atp) => {
 
 		inputNode.addEventListener('click', event => {
 			if(_state === "STATE_ENTERING_NICKNAME" && (event.target.selectionStart < _startsAt || event.target.selectionStart > _endsAt + 1)) {
-				console.log("[atp] chat input clicked outside of the nick boundary")
+				ATP.log("[atp] chat input clicked outside of the nick boundary")
 				_state = "STATE_IDLE"
 				_nickname = ""
 				_startsAt = 0
@@ -51,15 +51,15 @@ UserInterface.bind("chat", async (element, atp) => {
 		})
 
 		inputNode.addEventListener("keyup", event => {
-			console.log(event.target.selectionStart, _endsAt)
+			ATP.log(event.target.selectionStart, _endsAt)
 			if(_state === "STATE_ENTERING_NICKNAME" && _nickname.length >= 2 && (event.target.selectionStart < _startsAt || event.target.selectionStart > _endsAt + 1)) {
-				console.log("[atp] chat jumped outside of the nick boundary")
+				ATP.log("[atp] chat jumped outside of the nick boundary")
 				_state = "STATE_IDLE"
 				_nickname = ""
 				_startsAt = 0
 				_endsAt = 0
 			} else if(_state === "STATE_ENTERING_NICKNAME" && event.keyCode === 9) {
-				console.log("[atp] chat input tab pressed", _tabIndex, _nickname, _startsAt, _endsAt)
+				ATP.log("[atp] chat input tab pressed", _tabIndex, _nickname, _startsAt, _endsAt)
 				const nicknames = [...document.querySelectorAll(".chat article header a")].map(anchorNode => anchorNode.textContent).filter((value, index, array) => {
 					return array.indexOf(value) === index
 				})

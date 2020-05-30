@@ -9,10 +9,7 @@ ATP.WatchList = function() {
 ATP.WatchList.prototype.initialize = function(localStorage) {
 	ATP.log("[atp] Initializing watchlist", localStorage.getItem("atp_entries"))
 	let entriesData = []
-	if(localStorage.getItem("entries") !== null && localStorage.getItem("atp_entries") === null) { // FIXME Moving from entries to atp_entries. Condition should be removed in 1.4.5
-		entriesData = JSON.parse(localStorage.getItem("entries"))
-		localStorage.removeItem("entries")
-	} else if(localStorage.getItem("atp_entries") !== null) {
+	if(localStorage.getItem("atp_entries") !== null) {
 		entriesData = JSON.parse(localStorage.getItem("atp_entries"))
 	}
 	entriesData.forEach(data => this.addEntry(data))
@@ -26,12 +23,6 @@ ATP.WatchList.prototype.initialize = function(localStorage) {
  */
 ATP.WatchList.prototype.addEntry = function(data) {
 	ATP.log("[atp] Adding entry to watchlist", data)
-	if(data.name) { // FIXME Moving from name to title. Condition should be removed in 1.4.5
-		data.title = data.name
-	}
-	if(!data.state) { // FIXME Added new key. Condition should be removed in 1.4.5
-		data.state = ATP.WatchListEntry.STATE_WATCHING
-	}
 	const entry = new ATP.WatchListEntry(data.title, data.slug, data.state)
 	this.entries.push(entry)
 	localStorage.setItem("atp_entries", JSON.stringify(this.entries))

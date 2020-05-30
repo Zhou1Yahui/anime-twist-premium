@@ -22,7 +22,7 @@ UserInterface.bind("watchlist.menu", async (element, atp, watchList) => {
 	UserInterface.runModel("watchlist.menu-toggles", { parentNode: document.querySelector(".toggles"), bindingArgs: [atp, watchList] })
 
 	watchListButton.addEventListener("click", () => {
-		UserInterface.announce(watchList, "entries popup")
+		UserInterface.announce(watchList, "lists popup")
 	})
 
 })
