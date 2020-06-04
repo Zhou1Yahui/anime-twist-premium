@@ -1,7 +1,6 @@
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 840px) {
 	#atp-watch-lists {
 		padding: 20px;
-		min-height: 100vh !important;
 		min-width: 100vw !important;
 		grid-template-rows: 1fr auto;
 	}
@@ -59,8 +58,6 @@
 }
 
 #atp-watch-lists .list .entries {
-	max-height: 20vh;
-	overflow: auto;
 	display: grid;
 	padding: 5px;
 	grid-gap: 10px;

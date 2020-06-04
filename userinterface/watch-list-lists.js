@@ -55,6 +55,11 @@ UserInterface.bind("watchlist.lists", async (element, atp, watchList) => {
 		data: { className: "plan-to-watch", title: "Plan to Watch" },
 		bindingArgs: [atp, watchList, ATP.WatchListEntry.STATE_PLAN_TO_WATCH]
 	})
+	await UserInterface.runModel("watchlist.list", {
+		parentNode: document.querySelector(".lists"),
+		data: { className: "dropped", title: "Dropped" },
+		bindingArgs: [atp, watchList, ATP.WatchListEntry.STATE_DROPPED]
+	})
 
 	element.querySelector(".clear").addEventListener("click" , () => {
 		UserInterface.announce(atp, "popup confirm open", { eventYes: "watchlist entries clear", eventNo: "watchlist lists popup", text: "Are you sure?" })
@@ -65,7 +70,7 @@ UserInterface.bind("watchlist.lists", async (element, atp, watchList) => {
 	})
 
 	element.querySelector(".import").addEventListener("click" , () => {
-		UserInterface.announce(watchList, "import")
+		UserInterface.announce(watchList, "import popup")
 	})
 
 	element.querySelector(".close").addEventListener("click" , () => {

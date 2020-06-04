@@ -1,6 +1,7 @@
 ATP.WatchList = function() {
 	this.entry = null
 	this.entries = []
+	this.initialized = false
 }
 
 /**
@@ -13,6 +14,7 @@ ATP.WatchList.prototype.initialize = function(localStorage) {
 		entriesData = JSON.parse(localStorage.getItem("atp_entries"))
 	}
 	entriesData.forEach(data => this.addEntry(data))
+	this.initialized = true
 }
 
 /**
@@ -22,10 +24,12 @@ ATP.WatchList.prototype.initialize = function(localStorage) {
  * @return {WatchListEntry}
  */
 ATP.WatchList.prototype.addEntry = function(data) {
-	ATP.log("[atp] Adding entry to watchlist", data)
+	// ATP.log("[atp] Adding entry to watchlist", data)
 	const entry = new ATP.WatchListEntry(data.title, data.slug, data.state)
 	this.entries.push(entry)
-	localStorage.setItem("atp_entries", JSON.stringify(this.entries))
+	if(this.initialized) {
+		localStorage.setItem("atp_entries", JSON.stringify(this.entries))
+	}
 	return entry
 }
 

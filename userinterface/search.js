@@ -10,6 +10,9 @@ UserInterface.model({
 UserInterface.bind("search", async (element, atp) => {
 
 	const search = new ATP.Search()
+	atp.search = search
+
+	search.initialize(localStorage)
 
 	let _seriesNodes = null
 	const _observer = new MutationObserver(() => {
@@ -26,6 +29,7 @@ UserInterface.bind("search", async (element, atp) => {
 
 
 	UserInterface.listen(search, "entries render state", () => {
+		ATP.log("[atp] Updating search entries...")
 		if(_observer) {
 			_observer.disconnect()
 		}
@@ -33,7 +37,7 @@ UserInterface.bind("search", async (element, atp) => {
 			const titleNode = seriesNode.querySelector(".series-title")
 			const slug = ATP.getSlug(titleNode.href)
 			entry = atp.watchList.entries.find(entry => entry.slug === slug)
-			seriesNode.classList.remove("completed", "plan-to-watch", "watching")
+			seriesNode.classList.remove("completed", "plan-to-watch", "watching", "dropped")
 			if(entry && entry.slug === slug) {
 				if(entry.state === ATP.WatchListEntry.STATE_COMPLETED) {
 					seriesNode.classList.add("completed")
@@ -41,6 +45,8 @@ UserInterface.bind("search", async (element, atp) => {
 					seriesNode.classList.add("plan-to-watch")
 				} else if(entry.state === ATP.WatchListEntry.STATE_WATCHING) {
 					seriesNode.classList.add("watching")
+				} else if(entry.state === ATP.WatchListEntry.STATE_DROPPED) {
+					seriesNode.classList.add("dropped")
 				}
 			}
 		}
@@ -48,14 +54,12 @@ UserInterface.bind("search", async (element, atp) => {
 	})
 
 	UserInterface.listen(atp.watchList, "entries updated", () => {
-		console.log("test")
 		if(_seriesNodes !== null) {
 			UserInterface.announce(search, "entries render state")
 		}
 	})
 
 	UserInterface.listen(atp.watchList, "entry added", () => {
-		console.log("test")
 		if(_seriesNodes !== null) {
 			UserInterface.announce(search, "entries render state")
 		}

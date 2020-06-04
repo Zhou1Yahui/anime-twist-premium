@@ -11,7 +11,7 @@ UserInterface.model({
 
 UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 
-	const listeners = []
+	const _listeners = []
 
 	if(watchList.entry !== null) {
 		element.textContent = "🗑️"
@@ -21,13 +21,13 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 		element.style.display = "block"
 	}
 
-	listeners.push(UserInterface.listen(atp, "pathname update", data => {
+	_listeners.push(UserInterface.listen(atp, "pathname update", data => {
 		if(ATP.isAnimePage(data.current) === false) {
-			listeners.forEach(listener => UserInterface.removeListener(listener))
+			_listeners.forEach(listener => UserInterface.removeListener(listener))
 		}
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "entry added", entry => {
+	_listeners.push(UserInterface.listen(watchList, "entry added", entry => {
 		if(entry === watchList.entry) {
 			element.textContent = "🗑️"
 			element.title = "Remove from Watchlist"
@@ -37,7 +37,7 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 		}
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "entry removed", () => {
+	_listeners.push(UserInterface.listen(watchList, "entry removed", () => {
 		if(watchList.entry === null) {
 			element.textContent = "➕"
 			element.title = "Add to Watchlist"
@@ -47,7 +47,7 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 		}
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "entries clear", () => {
+	_listeners.push(UserInterface.listen(watchList, "entries clear", () => {
 		element.textContent = "➕"
 			element.title = "Add to Watchlist"
 	}))
@@ -84,6 +84,15 @@ UserInterface.bind("watchlist.add", (element, atp, watchList) => {
 					value: {
 						...entry,
 						state: ATP.WatchListEntry.STATE_PLAN_TO_WATCH
+					}
+				},
+				{
+					text: "Dropped",
+					action: "watchlist entry add",
+					model: "collection.button",
+					value: {
+						...entry,
+						state: ATP.WatchListEntry.STATE_DROPPED
 					}
 				}
 			])

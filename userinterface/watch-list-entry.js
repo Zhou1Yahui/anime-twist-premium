@@ -8,8 +8,9 @@ UserInterface.model({
 			{
 				tagName: "button",
 				className: "state",
-				title: data.state === ATP.WatchListEntry.STATE_COMPLETED || data.state === ATP.WatchListEntry.STATE_PLAN_TO_WATCH ? "Mark as watching" : "Mark as watched",
-				textContent: data.state === ATP.WatchListEntry.STATE_COMPLETED ? "❌" : data.state === ATP.WatchListEntry.STATE_PLAN_TO_WATCH ? "📺" : "✔️"
+				style: "font-size: 0.8rem",
+				title: "Edit state",
+				textContent: "✏️"
 			},
 			{
 				title: data.date.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
@@ -40,7 +41,7 @@ UserInterface.model({
 						tagName: "button",
 						title: "Remove this entry",
 						className: "remove",
-						style: "cursor: pointer;",
+						style: "font-size: 0.8rem; cursor: pointer;",
 						textContent: "🗑️"
 					}
 				]
@@ -51,16 +52,57 @@ UserInterface.model({
 
 UserInterface.bind("watchlist.entry", (element, atp, watchList, entry) => {
 
-	const listeners = []
+	const _listeners = []
 
-	listeners.push(UserInterface.listen(entry, "remove", () => {
-		listeners.forEach(listener => UserInterface.removeListener(listener))
+	_listeners.push(UserInterface.listen(atp, "popup close", () => {
+		_listeners.forEach(listener => UserInterface.removeListener(listener))
+	}))
+
+	_listeners.push(UserInterface.listen(entry, "remove", () => {
+		_listeners.forEach(listener => UserInterface.removeListener(listener))
 		element.remove()
 	}))
 
 	element.querySelector(".state").addEventListener("click" , event => {
-		element.remove()
-		UserInterface.announce(watchList, "entry update", { entry,  data: { state: event.target.textContent === "✔️" ? ATP.WatchListEntry.STATE_COMPLETED : event.target.textContent === "📺" || event.target.textContent === "❌" ? ATP.WatchListEntry.STATE_WATCHING : ATP.WatchListEntry.STATE_PLAN_TO_WATCH  } })
+		const controls = [
+			{
+				text: "Watching",
+				action: "watchlist entry state update",
+				model: "collection.button",
+				value: {
+					entry,
+					state: ATP.WatchListEntry.STATE_WATCHING
+				}
+			},
+			{
+				text: "Completed",
+				action: "watchlist entry state update",
+				model: "collection.button",
+				value: {
+					entry,
+					state: ATP.WatchListEntry.STATE_COMPLETED
+				}
+			},
+			{
+				text: "Plan to Watch",
+				action: "watchlist entry state update",
+				model: "collection.button",
+				value: {
+					entry,
+					state: ATP.WatchListEntry.STATE_PLAN_TO_WATCH
+				}
+			},
+			{
+				text: "Dropped",
+				action: "watchlist entry state update",
+				model: "collection.button",
+				value: {
+					entry,
+					state: ATP.WatchListEntry.STATE_DROPPED
+				}
+			}
+		].filter(control => control.value.state !== entry.state)
+		UserInterface.announce(atp, "popup controls open", controls)
 	})
 
 	element.querySelector(".remove").addEventListener("click" , () => {

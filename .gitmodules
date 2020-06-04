@@ -3,4 +3,7 @@
 	url = https://github.com/thoughtsunificator/userinterface.js.git
 [submodule "lib/userinterface.js-collection"]
 	path = lib/userinterface.js-collection
-	url = https://github.com/thoughtsunificator/userinterface.js-collection
+	url = https://github.com/thoughtsunificator/userinterface.js-collection.git
+[submodule "lib/userinterface.js-paginator"]
+	path = lib/userinterface.js-paginator
+	url = https://github.com/thoughtsunificator/userinterface.js-paginator.git

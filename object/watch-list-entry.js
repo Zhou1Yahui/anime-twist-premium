@@ -13,3 +13,4 @@ ATP.WatchListEntry = function(title, slug, state = ATP.WatchListEntry.STATE_WATC
 ATP.WatchListEntry.STATE_COMPLETED = "STATE_COMPLETED"
 ATP.WatchListEntry.STATE_WATCHING = "STATE_WATCHING"
 ATP.WatchListEntry.STATE_PLAN_TO_WATCH = "STATE_PLAN_TO_WATCH"
+ATP.WatchListEntry.STATE_DROPPED = "STATE_DROPPED"

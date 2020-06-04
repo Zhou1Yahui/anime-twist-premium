@@ -8,7 +8,7 @@ UserInterface.model({
 			{
 				tagName: "h2",
 				className: "title",
-				title: "Toggle List",
+				title: "Toggle list",
 				textContent: data.title
 			},
 			{
@@ -27,22 +27,28 @@ UserInterface.model({
 UserInterface.bind("watchlist.list", async (element, atp, watchList, entryState) => {
 
 	const entriesNode = element.querySelector(".entries")
-	const listeners = []
+	const _listeners = []
 
-	listeners.push(UserInterface.listen(atp, "popup close", () => {
-		listeners.forEach(listener => UserInterface.removeListener(listener))
+	_listeners.push(UserInterface.listen(atp, "popup close", async () => {
+		_listeners.forEach(listener => UserInterface.removeListener(listener))
+		await UserInterface.announce(atp, "paginator destroy")
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "lists render", async () => {
-		ATP.log("[atp] Rendering watchlist entries...", entryState)
+	_listeners.push(UserInterface.listen(watchList, "lists render", async () => {
+		ATP.log("[atp] Rendering watchlist list...", entryState)
 
 		const entries = watchList.entries.filter(entry => entry.state === entryState)
-		for(const entry of entries) {
-			await UserInterface.runModel("watchlist.entry", { data: entry, parentNode: entriesNode, bindingArgs: [atp, watchList, entry] })
+
+		if(entries.length >= 1) {
+			UserInterface.runModel("paginator", {
+				parentNode: entriesNode,
+				bindingArgs: [atp, "watchlist.entry", [atp, watchList], 5, entries]
+			})
 		}
+
 	}))
 
-	listeners.push(UserInterface.listen(watchList, "entry updated", async data => {
+	_listeners.push(UserInterface.listen(watchList, "entry updated", async data => {
 		if(data.data.state === entryState) {
 			await UserInterface.runModel("watchlist.entry", { data: data.entry, parentNode: entriesNode, bindingArgs: [atp, watchList, data.entry] })
 		}

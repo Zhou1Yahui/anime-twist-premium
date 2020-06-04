@@ -2,8 +2,8 @@ ATP = function() {
 	this.state = ATP.STATE_IDLE
 }
 
-ATP.DEBUG = false
-ATP.LOGS_MAXIMUM_ITEMS = 15
+ATP.DEBUG = true
+ATP.LOGS_MAXIMUM_ENTRIES = 15
 
 ATP.log = function() {
 	if(ATP.DEBUG) {
@@ -20,7 +20,7 @@ ATP.addLog = function() {
 		logs = JSON.parse(logItem)
 	}
 
-	if(logs.length === ATP.LOGS_MAXIMUM_ITEMS) {
+	if(logs.length === ATP.LOGS_MAXIMUM_ENTRIES) {
 		logs.pop()
 	}
 

@@ -3,45 +3,55 @@
 		z-index: 30 !important;
 		overflow: auto;
 	}
+
+	.popup-body {
+		display: grid;
+		place-content: center;
+		overflow: auto;
+		width: 100%;
+	}
+
 	.toggles {
 		display: grid;
 		grid-auto-flow: column
 	}
+
+	#atp-watch-lists {
+		overflow: auto;
+	}
+}
+
+.atp-search .series {
+	grid-column: span 2;
 }
 
 .popup-body {
-	max-width: 840px !important;
-	max-height: 100vh !important;
-	flex: none !important;
 	padding: 1rem !important;
 	background: #1c1f22 !important;
 	border-radius: 2px !important;
-	display: flex !important;
-	flex-direction: column !important;
 	margin: 0 auto !important;
 	border: 0 !important;
 }
 
-.series .completed .series-title:before {
+.series .series-title:before {
 	padding-right: 10px;
 	font-size: 1.2rem;
-	content: "✔️";
 	display: grid;
 	align-content: center;
+}
+
+.series .completed .series-title:before {
+	content: "✔️";
 }
 
 .series .plan-to-watch .series-title:before {
 	content: "⏱️";
-	display: grid;
-	align-content: center;
-	padding-right: 10px;
-	font-size: 1.2rem;
 }
 
 .series .watching .series-title:before {
 	content: "📺";
-	display: grid;
-	align-content: center;
-	padding-right: 10px;
-	font-size: 1.2rem;
+}
+
+.series .dropped .series-title:before {
+	content: "💩";
 }

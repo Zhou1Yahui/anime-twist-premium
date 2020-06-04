@@ -62,12 +62,18 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		UserInterface.announce(atp, "popup close")
 	})
 
+	UserInterface.listen(atp, "watchlist entry state update", async data => {
+		await UserInterface.announce(watchList, "entry update", { entry: data.entry,  data: { state: data.state  } })
+		UserInterface.announce(watchList, "lists popup")
+	})
+
 	UserInterface.listen(watchList, "lists popup", () => {
 		UserInterface.announce(atp, "popup open", {
 			model: "watchlist.lists",
 			bindingArgs: [atp, watchList]
 		})
 	})
+
 	UserInterface.listen(watchList, "entry add", async data => {
 		const entry = watchList.addEntry(data)
 		watchList.entry = entry
@@ -96,7 +102,7 @@ UserInterface.bind("watchlist", async (element, atp) => {
 		watchList.clearEntries()
 	})
 
-	UserInterface.listen(watchList, "entries set", async entries => {
+	UserInterface.listen(watchList, "entries load", async entries => {
 		await UserInterface.announce(watchList, "entries clear")
 		const entry = entries.find(entry => entry.slug === ATP.getSlug(location.pathname))
 		if(entry) {
@@ -121,20 +127,81 @@ UserInterface.bind("watchlist", async (element, atp) => {
 			anchorElement.href = event.target.result
 			anchorElement.click()
 		}
+		reader.onerror = function(event) {
+			ATP.log(event)
+		}
 		reader.readAsDataURL(blob)
+		UserInterface.announce(watchList, "lists popup")
 	})
 
-	UserInterface.listen(watchList, "import", () => {
+	UserInterface.listen(atp, "watchlist import", data => {
 		const inputElement = document.createElement("input")
 		inputElement.type = "file"
 		inputElement.addEventListener("change", event => {
 			const reader = new FileReader();
 			reader.onload = function(event_) {
-				UserInterface.announce(watchList, "entries set", JSON.parse(event_.target.result))
+				let entries
+				if(data === "atp") {
+					entries = JSON.parse(event_.target.result)
+				} else if(data === "myanimelist") {
+					const domParser = new DOMParser();
+					const doc = domParser.parseFromString(event_.target.result, "application/xml")
+					entries = []
+					const animeNodes = doc.querySelectorAll("anime")
+					for(const animeNode of animeNodes) {
+						const myStatus = animeNode.querySelector("my_status").textContent
+						let state = ATP.WatchListEntry.STATE_PLAN_TO_WATCH
+						if(myStatus === "Watching") {
+							state = ATP.WatchListEntry.STATE_WATCHING
+						} else if(myStatus === "Completed") {
+							state = ATP.WatchListEntry.STATE_COMPLETED
+						} else if(myStatus === "Plan to Watch") {
+							state = ATP.WatchListEntry.STATE_PLAN_TO_WATCH
+						} else if(myStatus === "Dropped") {
+							state = ATP.WatchListEntry.STATE_DROPPED
+						}
+						const myStartDate = animeNode.querySelector("my_start_date").textContent
+						let date = new Date()
+						if(isNaN(Date.parse(myStartDate)) === false) {
+							date = new Date(myStartDate)
+						}
+						const searchEntry = atp.search.entries.find(entry => entry.title === animeNode.querySelector("series_title").textContent)
+						if(searchEntry) {
+							entries.push({
+								slug: searchEntry.slug,
+								title: searchEntry.title,
+								state,
+								date
+							})
+						}
+					}
+				}
+				UserInterface.announce(watchList, "entries load", entries)
+			}
+			reader.onerror = function(event) {
+				ATP.log(event)
 			}
 			reader.readAsText(event.target.files[0])
 		})
 		inputElement.click()
+		UserInterface.announce(watchList, "lists popup")
+	})
+
+	UserInterface.listen(watchList, "import popup", () => {
+		UserInterface.announce(atp, "popup controls open", [
+			{
+				text: "ATP",
+				action: "watchlist import",
+				model: "collection.button",
+				value: "atp"
+			},
+			{
+				text: "MyAnimeList",
+				action: "watchlist import",
+				model: "collection.button",
+				value: "myanimelist"
+			}
+		])
 	})
 
 })
